@@ -92,12 +92,81 @@ class Switch(Equipement):
         base = super().__str__()
         return f"{base} | VLANs: {len(self._vlans)}"
     
-
-
-
+class Serveur(Equipement):
+    """Serveur reseau - expose des services."""
+    def __init__(self,nom,marque,adresse_ip):
+        super().__init__(nom,marque,adresse_ip)
+        self._services = []
+    def exposer_service(self,service):
+        """Utiliser pour demarrer un service sur ce serveur."""
+        service = service.upper()
+        if service in self._services:
+            print(f"{service} deja expose.")
+        else:
+            self._services.append(service)
+            print(f" Service {service} demarre sur {self._nom}.")
+    def retirer_service(self,service):
+        service=service.upper()
+        if service in self._services:
+            self._services.remove(service)
+            print(f"Services {service} arrete.")
+        else:
+            print(f" Service {service} non trouve. ")
+    def get_services(self):
+        return self._services
+    def __str__(self):
+        base = super().__str__()
+        if self._services:
+            service = ",".join(self._services) 
+        else:
+            service = "aucun"
+        return f"{base} | Services offert: [{service}]"
+# class Terminal(Equipement):
+    """Terminal Reseau 
+    def __init__(self,nom,marque,adresse_ip,type_terminal):
+        super().__init(nom,marque,adresse_ip)
+        self._type_terminal =str(type_terminal)
+    def envoyer_paquet(self,paquet):
+        if not self._statut:
+            print(f"{self._nom} est eteint, impossible d'envoyer.")
+            return"""
+class PointAccesWifi(Equipement):
+    """Point d'access Wi-Fi - diffuse un reseau sans fil."""
+    def __init__(self,nom,marque,adresse_ip,ssid,canal = 6,frequence = 2.4):
+        super().__init__(nom,marque,adresse_ip)
+        self._ssid= str(ssid)
+        self._canal= int(canal)
+        self._frequence= float(frequence)
+    def get_ssid(self):
+        return self._ssid
+    def set_canal(self,canal,frequence=None):
+        """Permet de changer le canal et la frequence si une valeur ne l'est pas attribuer"""
+        if canal in {1,2,3,4,5,6,7,8,9,10,11,12,13,14}:
+            self._canal=canal
+        else:
+            print(f"Erreur:numero de canal dans l'interval [1,14]")
+        if frequence is not None:
+            self._frequence=frequence
+        print(f"Canal mis a {self._canal} ({self._frequence} GHz).")
+    def __str__(self):
+        base=super().__str__()
+        return f"{base} | SSID:{self._ssid} | Canal: {self._canal} ({self._frequence}GHz) "
+    
+    
 # testeur de classe
-"""
+
 if __name__ =="__main__":
+    ap= PointAccesWifi("AP_Labo","Tp-Link","192.168.0.1","GTR3-Lab",canal=9)
+    ap.activer()
+    print(ap.get_ssid())
+    print(ap)
+    ap.set_canal(11,2.4)
+    serv= Serveur("SRV_Web","Dell","10.0.2.1")
+    serv.activer()
+    serv.exposer_service("https")
+    serv.exposer_service("SSh")
+    print(serv)
+    print(serv.get_services())
     sw= Switch("SW_Distrib","HP","10.0.0.2")
     sw.activer()
     sw.ajouter_vlan(10,"RH")
@@ -116,4 +185,4 @@ if __name__ =="__main__":
     equip =Equipement("Test_Equip","Cisco","192.168.1.1")
     print(equip)
     equip.activer()
-    print(equip)  """              
+    print(equip)              
