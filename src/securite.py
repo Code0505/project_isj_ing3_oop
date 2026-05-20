@@ -1,6 +1,6 @@
 from datetime import datetime
 from paquets import Paquet
-from equipement import Equipement
+from equipements import Equipement
 
 class RegleFiltrage:
     def __init__(self, action, ip_source, protocole, port_destination, plage_reseau):

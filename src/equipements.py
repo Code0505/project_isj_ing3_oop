@@ -1,4 +1,8 @@
-class Equipement:
+from paquets import Paquet
+from abc import ABC, abstractmethod
+
+
+class Equipement(ABC):
     """ Classe parent de tous les equipements reseau. """
 
     def __init__(self,nom,marque,adresse_ip):
@@ -7,14 +11,18 @@ class Equipement:
         self._marque = str(marque)
         self._ip = str(adresse_ip) 
         self._statut = False
+    @abstractmethod
     def activer(self):
         self._statut = True
         return f"{self._nom} active "
+    @abstractmethod
     def desactiver(self):
         self._statut = False
         return f"{self._nom} desactive "
+    @abstractmethod
     def est_actif(self):
         return self._statut
+    @abstractmethod
     def __str__(self):
         if self._statut:
             statut= "ACTIF" 
@@ -29,6 +37,17 @@ class Routeur(Equipement):
         super().__init__(nom,marque,adresse_ip)
         # la table de routage est un dictionaire
         self._table_routage= {}
+    
+    def activer(self):
+        self._statut = True
+        return f"{self._nom} actif "
+    
+    def desactiver(self):
+        self._statut = False
+        return f"{self._nom} Inactif "
+   
+    def est_actif(self):
+        return self._statut
     def ajouter_route(self,destination,passerelle,interface):
         """Permet d'ajouter une entree a la table de routage. """
         self._table_routage[destination] = {
@@ -62,6 +81,17 @@ class Switch(Equipement):
         super().__init__(nom, marque, adresse_ip)
         self._vlans = {1: 'default'} # Vlan 1 par defaut
         self._ports = {}
+    
+    def activer(self):
+        self._statut = True
+        return f"{self._nom} actif "
+    
+    def desactiver(self):
+        self._statut = False
+        return f"{self._nom} Inactif "
+   
+    def est_actif(self):
+        return self._statut
     def ajouter_vlan(self,vlan_id,nom):
         """Ajoute un VLAN. vlan_id doit etre entre 1 et 4094"""
         if not (1 <= vlan_id <= 4094):
@@ -114,6 +144,17 @@ class Serveur(Equipement):
             print(f" Service {service} non trouve. ")
     def get_services(self):
         return self._services
+    
+    def activer(self):
+        self._statut = True
+        return f"{self._nom} actif "
+    
+    def desactiver(self):
+        self._statut = False
+        return f"{self._nom} Inactif "
+   
+    def est_actif(self):
+        return self._statut
     def __str__(self):
         base = super().__str__()
         if self._services:
@@ -121,15 +162,33 @@ class Serveur(Equipement):
         else:
             service = "aucun"
         return f"{base} | Services offert: [{service}]"
-# class Terminal(Equipement):
-    """Terminal Reseau 
+class Terminal(Equipement):
+    """Terminal Reseau utilisateur final"""
     def __init__(self,nom,marque,adresse_ip,type_terminal):
-        super().__init(nom,marque,adresse_ip)
+        super().__init__(nom,marque,adresse_ip)
         self._type_terminal =str(type_terminal)
-    def envoyer_paquet(self,paquet):
+    def envoyer_paquet(self,paquet:Paquet):
         if not self._statut:
             print(f"{self._nom} est eteint, impossible d'envoyer.")
-            return"""
+            return
+        print(f"{self._nom} envoie: {paquet}")
+     
+    def activer(self):
+        self._statut = True
+        return f"{self._nom} actif "
+    
+    def desactiver(self):
+        self._statut = False
+        return f"{self._nom} Inactif "
+   
+    def est_actif(self):
+        return self._statut
+   
+    def __str__(self):
+        base = super().__str__()
+        return f"{base} | Type: {self._type_terminal}"
+    
+
 class PointAccesWifi(Equipement):
     """Point d'access Wi-Fi - diffuse un reseau sans fil."""
     def __init__(self,nom,marque,adresse_ip,ssid,canal = 6,frequence = 2.4):
@@ -137,6 +196,17 @@ class PointAccesWifi(Equipement):
         self._ssid= str(ssid)
         self._canal= int(canal)
         self._frequence= float(frequence)
+    
+    def activer(self):
+        self._statut = True
+        return f"{self._nom} actif "
+    
+    def desactiver(self):
+        self._statut = False
+        return f"{self._nom} Inactif "
+   
+    def est_actif(self):
+        return self._statut
     def get_ssid(self):
         return self._ssid
     def set_canal(self,canal,frequence=None):
@@ -156,6 +226,14 @@ class PointAccesWifi(Equipement):
 # testeur de classe
 
 if __name__ =="__main__":
+    te= Terminal("PC_Bureau","Lenovo","192.168.1.100","Bureau")
+    te.activer()
+    p= Paquet("192.168.1.10","10.0.0.1","TCP","512","1","80")
+
+    te.envoyer_paquet(p)
+
+
+
     ap= PointAccesWifi("AP_Labo","Tp-Link","192.168.0.1","GTR3-Lab",canal=9)
     ap.activer()
     print(ap.get_ssid())
@@ -182,7 +260,4 @@ if __name__ =="__main__":
     r.ajouter_route("10.0.0.0/8","10.0.0.254","eth1")
     print(r)
     print(r.get_table_routage())
-    equip =Equipement("Test_Equip","Cisco","192.168.1.1")
-    print(equip)
-    equip.activer()
-    print(equip)              
+            
