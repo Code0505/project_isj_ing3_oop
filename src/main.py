@@ -12,7 +12,7 @@ class MenuInteractif:
         self.simulateur = SimulateurTrafic(self.topologie)
         self.moniteur   = Moniteur(self.topologie)
 
-    # LANCEMENT
+         # LANCEMENT
 
     def lancer(self):
         print("=" * 50)
@@ -50,7 +50,7 @@ class MenuInteractif:
             else:
                 print("Choix invalide, réessayez.")
 
-    # MENU ÉQUIPEMENTS
+         # MENU ÉQUIPEMENTS
 
     def menu_equipements(self):
         while True:
@@ -142,4 +142,106 @@ class MenuInteractif:
         ip2 = input("IP équipement 2 : ")
         self.topologie.supprimer_lien(ip1, ip2)
         print(f"Lien entre {ip1} et {ip2} supprimé.")
+        
+        # MENU TRAFIC
 
+    def menu_trafic(self):
+        print("\n--- Simulation de trafic ---")
+        print("Protocoles disponibles : TCP, UDP, ICMP")
+
+        source      = input("IP source      : ")
+        destination = input("IP destination : ")
+        protocole   = input("Protocole      : ").upper()
+        taille      = int(input("Taille (octets): "))
+        priorite    = int(input("Priorité (1-5) : "))
+
+        paquet = Paquet(source, destination, protocole, taille, priorite)
+
+        print(f"\nEnvoi du paquet : {paquet}")
+        print("Parcours :")
+
+        # Le simulateur calcule le chemin et transmet le paquet saut par saut
+        
+        chemin = self.simulateur.envoyer_paquet(paquet)
+
+        if not chemin:
+            print("Destination inatteignable ou paquet bloqué.")
+        else:
+            for etape in chemin:
+                print(f"  --> {etape}")
+            print("Paquet livré avec succès.")
+
+        # MENU FIREWALL
+
+    def menu_firewall(self):
+
+        # Recherche du Firewall dans la topologie
+        fw = self._trouver_firewall()
+        if fw is None:
+            print("Aucun Firewall dans la topologie.")
+            return
+
+        # Authentification obligatoire
+        print(f"\n--- Firewall : {fw} ---")
+        login = input("Login        : ")
+        mdp   = input("Mot de passe : ")
+
+        if not fw.authentifier(login, mdp):
+            print("Accès refusé.")
+            return
+
+        print("Accès accordé.")
+
+        while True:
+            print("\n--- Menu Firewall ---")
+            print("1. Ajouter une règle")
+            print("2. Supprimer une règle")
+            print("3. Consulter le journal")
+            print("0. Retour")
+
+            choix = input("\nVotre choix : ")
+
+            if choix == "1":
+                self._ajouter_regle(fw)
+            elif choix == "2":
+                self._supprimer_regle(fw)
+            elif choix == "3":
+                self._afficher_journal(fw)
+            elif choix == "0":
+                break
+            else:
+                print("Choix invalide.")
+
+    def _trouver_firewall(self):
+        for equip in self.topologie.equipements.values():
+            if isinstance(equip, Firewall):
+                return equip
+        return None
+
+    def _ajouter_regle(self, fw):
+        print("Actions : AUTORISER / BLOQUER")
+        action    = input("Action           : ").upper()
+        ip_source = input("IP source        : ")
+        protocole = input("Protocole        : ").upper()
+        port_dst  = int(input("Port destination : "))
+        plage     = input("Plage réseau     : ")
+
+        regle = RegleFiltrage(action, ip_source, protocole, port_dst, plage)
+        fw.ajouter_regle(regle)
+        print(f"Règle ajoutée : {regle}")
+
+    def _supprimer_regle(self, fw):
+        journal = fw.get_journal()
+        print(f"Nombre de règles actives : {len(fw.regles)}")
+        index = int(input("Index de la règle à supprimer (0 = première) : "))
+        fw.supprimer_regle(index)
+        print("Règle supprimée.")
+
+    def _afficher_journal(self, fw):
+        print("\n--- Journal du Firewall ---")
+        journal = fw.get_journal()
+        if not journal:
+            print("Le journal est vide.")
+        else:
+            for entree in journal:
+                print(f"  {entree}")
