@@ -5,6 +5,7 @@ from securite import RegleFiltrage
 from simulateur import SimulateurTrafic
 from moniteur import Moniteur
 
+
 class MenuInteractif:
 
     def __init__(self):
@@ -12,7 +13,7 @@ class MenuInteractif:
         self.simulateur = SimulateurTrafic(self.topologie)
         self.moniteur   = Moniteur(self.topologie)
 
-         # LANCEMENT
+    # LANCEMENT
 
     def lancer(self):
         print("=" * 50)
@@ -50,7 +51,7 @@ class MenuInteractif:
             else:
                 print("Choix invalide, réessayez.")
 
-         # MENU ÉQUIPEMENTS
+    # MENU ÉQUIPEMENTS
 
     def menu_equipements(self):
         while True:
@@ -137,13 +138,12 @@ class MenuInteractif:
         print(f"Lien {lien} ajouté.")
 
     def _supprimer_lien(self):
-
         ip1 = input("IP équipement 1 : ")
         ip2 = input("IP équipement 2 : ")
         self.topologie.supprimer_lien(ip1, ip2)
         print(f"Lien entre {ip1} et {ip2} supprimé.")
-        
-        # MENU TRAFIC
+
+    # MENU TRAFIC
 
     def menu_trafic(self):
         print("\n--- Simulation de trafic ---")
@@ -161,7 +161,6 @@ class MenuInteractif:
         print("Parcours :")
 
         # Le simulateur calcule le chemin et transmet le paquet saut par saut
-        
         chemin = self.simulateur.envoyer_paquet(paquet)
 
         if not chemin:
@@ -171,7 +170,7 @@ class MenuInteractif:
                 print(f"  --> {etape}")
             print("Paquet livré avec succès.")
 
-        # MENU FIREWALL
+    # MENU FIREWALL
 
     def menu_firewall(self):
 
@@ -245,19 +244,18 @@ class MenuInteractif:
         else:
             for entree in journal:
                 print(f"  {entree}")
-# MENU STATISTIQUES
+
+    # MENU STATISTIQUES
 
     def menu_statistiques(self):
         print("\n--- Statistiques réseau ---")
 
         # Données collectées par le moniteur
-        
         stats = self.moniteur.collecter()
         print(f"Paquets envoyés : {stats.get('paquets_envoyes', 0)}")
         print(f"Paquets perdus  : {stats.get('paquets_perdus', 0)}")
 
         # Taux d'utilisation des liens
-        
         print("\nTaux d'utilisation des liens :")
         taux = self.moniteur.get_taux_utilisation_liens()
         if not taux:
@@ -266,3 +264,34 @@ class MenuInteractif:
             for lien, valeur in taux.items():
                 print(f"  {lien} : {valeur}%")
 
+        # Équipements actifs
+        print("\nÉquipements actifs :")
+        actifs = self.moniteur.get_equipements_actifs()
+        if not actifs:
+            print("  Aucun équipement actif.")
+        else:
+            for equip in actifs:
+                print(f"  {equip}")
+
+        # Historique des 10 derniers paquets
+        print("\nHistorique (10 derniers paquets) :")
+        historique = self.simulateur.statistiques.get_historique()
+        if not historique:
+            print("  Aucun paquet enregistré.")
+        else:
+            for entree in historique:
+                print(f"  {entree}")
+
+    # MENU RAPPORT
+
+    def menu_rapport(self):
+        print("\n--- Génération du rapport ---")
+        fichier = "rapport_simnet.txt"
+        self.moniteur.generer_rapport(fichier)
+        print(f"Rapport exporté dans : {fichier}")
+
+# Point d'entrée
+
+if __name__ == "__main__":
+    menu = MenuInteractif()
+    menu.lancer()
