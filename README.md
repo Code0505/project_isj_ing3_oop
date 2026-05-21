@@ -4,7 +4,7 @@
 
 ### Membres
 
-| OUETE TECTSING MARC THIERRY | Module 1 — Equipement |
+| OUETE TECTSING MARC THIERRY , NOUMBO DONANG MICHEL-ANGE | Module 1 — Equipement , TOPOLOGIE & LIENS  |
 
 | NOM Prénom  2| Module 2 —  |
 
