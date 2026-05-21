@@ -15,6 +15,19 @@ class Topologie:
         self.liens = [] 
     def ajouter_equipement(self, equipement):
         self.equipements[equipement.ip] = equipement
-    def supprimer_equipement():
-        
+    def supprimer_equipement(self, ip):
+        if ip in self.equipements:
+            del self.equipements[ip]
+    def ajouter_lien(self, lien):
+        self.liens.append(lien)
+    def supprimer_lien(self, ip1, ip2):
+        for lien in self.liens :
+            if(lien.equipiment1.ip = ip1 and lien.equipement2.ip = ip2) or (lien.equipiment1.ip = ip2 and lien.equipement2.ip = ip1)
+                self.liens.remove(lien)
+                break
+    def get_equipement(self, ip):
+        return self.equipements[ip]
+    
+
+
     
