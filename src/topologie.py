@@ -22,12 +22,25 @@ class Topologie:
         self.liens.append(lien)
     def supprimer_lien(self, ip1, ip2):
         for lien in self.liens :
-            if(lien.equipiment1.ip = ip1 and lien.equipement2.ip = ip2) or (lien.equipiment1.ip = ip2 and lien.equipement2.ip = ip1)
+            if(lien.equipiment1.ip == ip1 and lien.equipement2.ip == ip2) or (lien.equipiment1.ip == ip2 and lien.equipement2.ip == ip1)
                 self.liens.remove(lien)
                 break
     def get_equipement(self, ip):
         return self.equipements[ip]
-    
+    def get_voisins(self, ip):
+        voisins=[]
+        for lien in self.liens: 
+            if(lien.equipement1.ip == ip):
+                voisins.append(lien.equipement2)
+            elif(lien.equipement2.ip == ip):
+                voisins.append(lien.equipement1)
+        return voisins
+    def afficher(self):
+        print("TOPOLOGIE DU RESEAU") 
+        for equip in self.equipements.values():
+            print(equip)
+        for lien in self.liens:
+            print(lien) 
 
 
     
