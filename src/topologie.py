@@ -41,7 +41,8 @@ class Topologie:
             print(equip)
         for lien in self.liens:
             print(lien) 
-            
+    def trouver_chemin(self, source, destination):
+        
         
 
 
