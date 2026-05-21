@@ -1,6 +1,6 @@
 # SIMNet — Simulateur de Réseau Intelligent en Python
 
-## Groupe 9 — Institut Saint Jean ING3 SRT 2025/2026
+## Groupe 3 — Institut Saint Jean ING3 SRT 2025/2026
 
 ### Membres
 
