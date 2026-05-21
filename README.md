@@ -4,11 +4,11 @@
 
 ### Membres
 
-| OUETE TECTSING MARC THIERRY | Module 1 — Equipement |
+| OUETE TECTSING MARC THIERRY , NOUMBO DONANG MICHEL-ANGE | Module 1 — Equipement , TOPOLOGIE & LIENS  |
 
-| NOM Prénom  2| Module 2 —  |
+| BAKOP McKALE PHARELL  &  (modifie ici boris !) | Module 2 — paquets.py |
 
-| NOM Prénom  3| Module 3 —  |
+| BAKOP McKALE PHARELL | Module 3 —  securite.py|
 
 | NOM Prénom  4 | Module 4 —  |
 

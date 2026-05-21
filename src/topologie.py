@@ -42,7 +42,22 @@ class Topologie:
         for lien in self.liens:
             print(lien) 
     def trouver_chemin(self, source, destination):
-        
+        visite = []
+        file = [[source]]
+        while file :
+            chemin = file.pop(0)
+            ip_actu = chemin[-1]
+            if(ip_actu == destination):
+                return chemin
+            if(ip_actu not in visite):
+                visite.append(ip_actu)
+                for voisin in self.get_voisins(ip_actu):
+                    if(voisin.ip not in visite):
+                        file.append(chemin + [voisin.ip])
+        return [] 
+    
+    
+                
         
 
 
