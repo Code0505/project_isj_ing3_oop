@@ -245,3 +245,24 @@ class MenuInteractif:
         else:
             for entree in journal:
                 print(f"  {entree}")
+# MENU STATISTIQUES
+
+    def menu_statistiques(self):
+        print("\n--- Statistiques réseau ---")
+
+        # Données collectées par le moniteur
+        
+        stats = self.moniteur.collecter()
+        print(f"Paquets envoyés : {stats.get('paquets_envoyes', 0)}")
+        print(f"Paquets perdus  : {stats.get('paquets_perdus', 0)}")
+
+        # Taux d'utilisation des liens
+        
+        print("\nTaux d'utilisation des liens :")
+        taux = self.moniteur.get_taux_utilisation_liens()
+        if not taux:
+            print("  Aucune donnée.")
+        else:
+            for lien, valeur in taux.items():
+                print(f"  {lien} : {valeur}%")
+
