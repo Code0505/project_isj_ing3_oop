@@ -154,8 +154,9 @@ class MenuInteractif:
         protocole   = input("Protocole      : ").upper()
         taille      = int(input("Taille (octets): "))
         priorite    = int(input("Priorité (1-5) : "))
+        port_destination = int(input("Port de destination : "))
 
-        paquet = Paquet(source, destination, protocole, taille, priorite)
+        paquet = Paquet(source, destination, protocole, taille, priorite,port_destination)
 
         print(f"\nEnvoi du paquet : {paquet}")
         print("Parcours :")
