@@ -10,7 +10,7 @@
 
 | BAKOP McKALE PHARELL | Module 3 —  securite.py|
 
-| NOM Prénom  4 | Module 4 —  |
+| TCHATCHUM TIENTCHEU MIGUEL GILDAS | Module 4 — Surveillance |
 
 | TAGUIWA KAMDEM Boris | Module 5 —  |
 
