@@ -3,7 +3,7 @@ from paquets import Paquet
 from topologie import Topologie, Lien
 from securite import RegleFiltrage
 from simulateur import SimulateurTrafic
-from moniteur import Moniteur
+from Moniteur import Moniteur
 
 
 class MenuInteractif:
@@ -65,24 +65,24 @@ class MenuInteractif:
         t = input("Type: ")
         nom = input("Nom: ")
         marque = input("Marque: ")
-        ip = input("IP: ")
+        adresse_ip = input("Adresse IP: ")
 
         if t == "routeur":
-            e = Routeur(nom, marque, ip)
+            e = Routeur(nom, marque,adresse_ip)
         elif t == "switch":
-            e = Switch(nom, marque, ip)
+            e = Switch(nom, marque, adresse_ip)
         elif t == "serveur":
-            e = Serveur(nom, marque, ip)
+            e = Serveur(nom, marque, adresse_ip)
         elif t == "firewall":
             login = input("Login: ")
             mdp = input("MDP: ")
-            e = Firewall(ip, nom, marque, login, mdp)
+            e = Firewall(adresse_ip, nom, marque, login, mdp)
         elif t == "wifi":
             ssid = input("SSID: ")
-            e = PointAccesWifi(nom, marque, ip, ssid)
+            e = PointAccesWifi(nom, marque, adresse_ip, ssid)
         elif t == "terminal":
             type_t = input("Type: ")
-            e = Terminal(nom, marque, ip, type_t)
+            e = Terminal(nom, marque, adresse_ip, type_t)
         else:
             return
 
@@ -148,11 +148,11 @@ class MenuInteractif:
 
             if c == "1":
                 action = input("Action: ")
-                ip = input("IP: ")
+                adresse_ip = input("IP: ")
                 proto = input("Proto: ")
                 port = input("Port: ")
                 plage = input("Plage: ")
-                r = RegleFiltrage(action, ip, proto, port, plage)
+                r = RegleFiltrage(action, adresse_ip, proto, port, plage)
                 fw.ajouter_regle(r)
             elif c == "2":
                 i = int(input("Index: "))

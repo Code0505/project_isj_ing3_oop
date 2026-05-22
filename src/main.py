@@ -1,9 +1,9 @@
-from equipements import Routeur, Switch, Serveur, Firewall, PointAccesWifi, Terminal
+from equipements import Routeur, Switch, Serveur, PointAccesWifi, Terminal
 from paquets import Paquet
 from topologie import Topologie, Lien
-from securite import RegleFiltrage
+from securite import RegleFiltrage,Firewall
 from simulateur import SimulateurTrafic
-from moniteur import Moniteur
+from Moniteur import Moniteur
 
 
 class MenuInteractif:
@@ -11,7 +11,7 @@ class MenuInteractif:
     def __init__(self):
         self.topologie  = Topologie()
         self.simulateur = SimulateurTrafic(self.topologie)
-        self.moniteur   = Moniteur(self.topologie)
+        self.Moniteur   = Moniteur(self.topologie)
 
     # LANCEMENT
 
@@ -89,24 +89,24 @@ class MenuInteractif:
         choix = input("Type : ")
         nom    = input("Nom    : ")
         marque = input("Marque : ")
-        ip     = input("IP     : ")
+        adresse_ip     = input("Adresse IP     : ")
 
         if choix == "1":
-            equip = Routeur(nom, marque, ip)
+            equip = Routeur(nom, marque, adresse_ip)
         elif choix == "2":
-            equip = Switch(nom, marque, ip)
+            equip = Switch(nom, marque, adresse_ip)
         elif choix == "3":
-            equip = Serveur(nom, marque, ip)
+            equip = Serveur(nom, marque, adresse_ip)
         elif choix == "4":
             login = input("Login admin   : ")
             mdp   = input("Mot de passe  : ")
-            equip = Firewall(ip, nom, marque, login, mdp)
+            equip = Firewall(adresse_ip, nom, marque, login, mdp)
         elif choix == "5":
             ssid = input("SSID  : ")
-            equip = PointAccesWifi(nom, marque, ip, ssid)
+            equip = PointAccesWifi(nom, marque, adresse_ip, ssid)
         elif choix == "6":
             type_t = input("Type terminal : ")
-            equip = Terminal(nom, marque, ip, type_t)
+            equip = Terminal(nom, marque, adresse_ip, type_t)
         else:
             print("Type invalide.")
             return
@@ -115,9 +115,9 @@ class MenuInteractif:
         print(f"Équipement {nom} ajouté.")
 
     def _supprimer_equipement(self):
-        ip = input("IP de l'équipement à supprimer : ")
-        self.topologie.supprimer_equipement(ip)
-        print(f"Équipement {ip} supprimé.")
+        adresse_ip = input("Adresse IP de l'équipement à supprimer : ")
+        self.topologie.supprimer_equipement(adresse_ip)
+        print(f"Équipement {adresse_ip} supprimé.")
 
     def _ajouter_lien(self):
         ip1 = input("IP équipement 1 : ")

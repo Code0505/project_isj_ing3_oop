@@ -84,8 +84,7 @@ class Moniteur:
 
     def afficher_historique(self):
 
-        print("
-===== HISTORIQUE DES PAQUETS =====")
+        print("===== HISTORIQUE DES PAQUETS =====")
 
         if len(self.historique) == 0:
             print("Aucun paquet enregistré")
@@ -105,52 +104,29 @@ class Moniteur:
 
         with open(nom_fichier, "w", encoding="utf-8") as fichier:
 
-            fichier.write("===== RAPPORT SIMNET =====
-")
-            fichier.write(f"Date : {datetime.now()}
+            fichier.write("===== RAPPORT SIMNET =====")
+            fichier.write(f"Date : {datetime.now()}")
 
-")
+            fichier.write("===== STATISTIQUES =====")
+            fichier.write(f"Paquets envoyés : {self.paquets_envoyes}")
+            fichier.write(f"Paquets perdus : {self.paquets_perdus}")
+            fichier.write(f"Débit total : {self.debit_total} octets")
 
-            fichier.write("===== STATISTIQUES =====
-")
-            fichier.write(f"Paquets envoyés : {self.paquets_envoyes}
-")
-            fichier.write(f"Paquets perdus : {self.paquets_perdus}
-")
-            fichier.write(f"Débit total : {self.debit_total} octets
-
-")
-
-            fichier.write("===== EQUIPEMENTS =====
-")
+            fichier.write("===== EQUIPEMENTS =====")
 
             for nom, stats in self.statistiques_equipements.items():
 
-                fichier.write(f"
-Equipement : {nom}
-")
-                fichier.write(f"Statut : {stats['statut']}
-")
-                fichier.write(
-                    f"Paquets transmis : {stats['paquets_transmis']}
-"
-                )
-                fichier.write(
-                    f"Paquets perdus : {stats['paquets_perdus']}
-"
-                )
+                fichier.write(f"Equipement : {nom}")
+                fichier.write(f"Statut : {stats['statut']}")
+                fichier.write(f"Paquets transmis : {stats['paquets_transmis']}")
+                fichier.write(f"Paquets perdus : {stats['paquets_perdus']}")
 
-            fichier.write("
-===== UTILISATION DES LIENS =====
-")
+            fichier.write("===== UTILISATION DES LIENS =====")
 
             for lien, valeur in self.utilisation_liens.items():
-                fichier.write(f"{lien} : {valeur}%
-")
+                fichier.write(f"{lien} : {valeur}%")
 
-            fichier.write("
-===== HISTORIQUE =====
-")
+            fichier.write("===== HISTORIQUE =====")
 
             for paquet in self.historique:
 
@@ -160,11 +136,9 @@ Equipement : {nom}
                     f"{paquet['destination']} | "
                     f"{paquet['protocole']} | "
                     f"{paquet['taille']} octets | "
-                    f"Priorité {paquet['priorite']}
-"
-                )
+                    f"Priorité {paquet['priorite']} | "
+                    f"Port de destination : {paquet['port_destination']} | ")
 
                 fichier.write(ligne)
 
-        print(f"
-Rapport généré : {nom_fichier}")
+        print(f"Rapport généré : {nom_fichier}")
