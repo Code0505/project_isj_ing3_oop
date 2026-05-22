@@ -1,4 +1,4 @@
-from equipements import Routeur, Switch, Serveur, PointAccesWifi, Terminal
+from equipements import Equipement,Routeur, Switch, Serveur, PointAccesWifi, Terminal
 from paquets import Paquet
 from topologie import Topologie, Lien
 from securite import RegleFiltrage,Firewall
