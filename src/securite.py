@@ -3,6 +3,9 @@ from equipements import Equipement
 from Paquets import Paquet
 
 class RegleFiltrage:
+    '''
+    Représente une règle utilisée par le firewall pour authoriser ou bloquer des paquets
+    '''
     def __init__(self, action, ip_source, protocole, port_destination, plage_reseau):
         self.action = action
         self.ip_source = ip_source
@@ -49,6 +52,9 @@ class RegleFiltrage:
         )
     
 class EntreeJournal:
+    ''' 
+    Lorsqu'un paquet est envoyé, ses informations sont stockés en tant qu'une entrée du journal du firewall 
+    '''
     def __init__(self, package: Paquet, decision: str):
         self.horodatage = datetime.now()
         self.package = package
@@ -57,6 +63,9 @@ class EntreeJournal:
         return( f"{self.horodatage} :: {self.package} :: Decision... {self.decision}" )
     
 class Firewall(Equipement):
+    '''
+    Cette classe représente un firewall chargé d'inspecter les paquets et d'appliquer des règles de filtrage
+    '''
     def __init__(self, nom, marque, adresse_ip, login, mot_de_passe):
         super().__init__(nom, marque, adresse_ip )
         self.regles = []
