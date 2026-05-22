@@ -1,4 +1,4 @@
-from paquets import Paquet
+from Paquets import Paquet
 from abc import ABC, abstractmethod
 
 
@@ -11,6 +11,17 @@ class Equipement(ABC):
         self._marque = str(marque)
         self._ip = str(adresse_ip) 
         self._statut = False
+    @property
+    def nom(self):
+        return self._nom
+ 
+    @property
+    def ip(self):
+        return self._ip
+ 
+    @property
+    def marque(self):
+        return self._marque
     @abstractmethod
     def activer(self):
         self._statut = True

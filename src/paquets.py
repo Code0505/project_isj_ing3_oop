@@ -1,3 +1,6 @@
+
+from statistique import Statistiques
+
 class Paquet:
     def __init__(self, source, destination, protocole, taille, priorite, port_destination):
         self.source = source
@@ -25,6 +28,7 @@ class SimulateurTrafic:
         return self.topologie.trouver_chemin(source, destination)
 
     def transmettre(self, paquet, chemin):
+        """Transmet le paquet saut par saut. Retourne True si livre."""
         if not chemin:
             self.statistiques.enregistrer_paquet(paquet, succes=False, transit=0.0)
             return False

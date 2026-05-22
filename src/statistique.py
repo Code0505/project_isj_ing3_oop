@@ -1,5 +1,5 @@
 from collections import deque
-from paquets import Paquet
+# from Paquets import Paquet
 
 
 class Statistiques:
@@ -12,7 +12,7 @@ class Statistiques:
         # deque avec maxlen=10 : garde automatiquement les 10 derniers paquets
         self.historique      = deque(maxlen=10)
 
-    def enregistrer_paquet(self, paquet: Paquet, succes: bool, transit: float):
+    def enregistrer_paquet(self, paquet, succes: bool, transit: float):
 
         self.paquets_envoyes += 1
 
@@ -45,7 +45,7 @@ class Statistiques:
         )
 
 # Test de la classe
-
+"""
 if __name__ == "__main__":
 
     stats = Statistiques()
@@ -65,5 +65,5 @@ if __name__ == "__main__":
         print(f"  {entree}")
 
     stats.reset()
-    print("\nAprès reset :")
-    print(stats)
+    print("Après reset :")
+    print(stats)"""

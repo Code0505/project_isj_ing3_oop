@@ -7,7 +7,6 @@ class Moniteur:
     def __init__(self, topologie):
 
         self.topologie = topologie
-
         self.paquets_envoyes = 0
         self.paquets_perdus = 0
         self.debit_total = 0
@@ -20,7 +19,7 @@ class Moniteur:
 
     def ajouter_equipement(self, equipement):
 
-        self.statistiques_equipements[equipement._nom] = {
+        self.statistiques_equipements[equipement.nom] = {
             "statut": "ACTIF",
             "paquets_transmis": 0,
             "paquets_perdus": 0
@@ -33,8 +32,8 @@ class Moniteur:
         else:
             statut = "INACTIF"
 
-        if equipement._nom in self.statistiques_equipements:
-            self.statistiques_equipements[equipement._nom]["statut"] = statut
+        if equipement.nom in self.statistiques_equipements:
+            self.statistiques_equipements[equipement.nom]["statut"] = statut
 
     def enregistrer_paquet(self, equipement, paquet):
 
@@ -42,10 +41,10 @@ class Moniteur:
 
         self.debit_total += int(paquet.taille)
 
-        if equipement._nom not in self.statistiques_equipements:
+        if equipement.nom not in self.statistiques_equipements:
             self.ajouter_equipement(equipement)
 
-        self.statistiques_equipements[equipement._nom]["paquets_transmis"] += 1
+        self.statistiques_equipements[equipement.nom]["paquets_transmis"] += 1
 
         self.historique.append({
             "heure": datetime.now().strftime("%H:%M:%S"),
@@ -53,21 +52,24 @@ class Moniteur:
             "destination": paquet.destination,
             "protocole": paquet.protocole,
             "taille": int(paquet.taille),
-            "priorite": int(paquet.priorite)
+            "priorite": int(paquet.priorite),
+            "port_destination": str(paquet.port_destination)
         })
 
     def enregistrer_paquet_perdu(self, equipement):
 
         self.paquets_perdus += 1
 
-        if equipement._nom not in self.statistiques_equipements:
+        if equipement.nom not in self.statistiques_equipements:
             self.ajouter_equipement(equipement)
 
-        self.statistiques_equipements[equipement._nom]["paquets_perdus"] += 1
+        self.statistiques_equipements[equipement.nom]["paquets_perdus"] += 1
 
     def mettre_a_jour_lien(self, lien, utilisation):
 
         self.utilisation_liens[str(lien)] = utilisation
+    def get_equipements_actifs(self):
+        return [e for e in self.topologie.equipements.values() if e.est_actif()]
 
     def collecter(self):
 
@@ -98,6 +100,7 @@ class Moniteur:
                 f"{paquet['protocole']} | "
                 f"{paquet['taille']} octets | "
                 f"Priorité {paquet['priorite']}"
+                f" | Port de destination : {paquet['port_destination']}"
             )
 
     def generer_rapport(self, nom_fichier="rapport_simnet.txt"):

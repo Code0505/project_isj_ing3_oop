@@ -1,6 +1,6 @@
 from datetime import datetime
 from equipements import Equipement
-from paquets import Paquet
+from Paquets import Paquet
 
 class RegleFiltrage:
     def __init__(self, action, ip_source, protocole, port_destination, plage_reseau):
@@ -27,7 +27,7 @@ class RegleFiltrage:
             f"Protocole = {self.protocole})"
         ) """
     
-    def correspond(self, package):
+    def correspond(self, package:Paquet):
         if self.ip_source != "*" and self.ip_source != package.source:
             return False
         if self.protocole != "*" and self.protocole != package.protocole:
@@ -49,7 +49,7 @@ class RegleFiltrage:
         )
     
 class EntreeJournal:
-    def __init__(self, package, decision):
+    def __init__(self, package: Paquet, decision: str):
         self.horodatage = datetime.now()
         self.package = package
         self.decision = decision
@@ -63,9 +63,24 @@ class Firewall(Equipement):
         self.journal = []
         self.login = login
         self.mot_de_passe = mot_de_passe
+        self.paquets_envoyes = 0
+        self.paquets_envoyes = 0
+    
+    def activer(self):
+        self._statut = True
+        return f"{self._nom} actif"
+ 
+    def desactiver(self):
+        self._statut = False
+        return f"{self._nom} inactif"
+ 
+    def est_actif(self):
+        return self._statut
     def authentifier(self, login, password):
         if self.login == login and self.mot_de_passe == password:
+            print("Authentification reussie.")
             return True
+        print("Echec d'authentification.")
         return False
     def ajouter_regle(self, rule):
         self.regles.append(rule)
@@ -81,11 +96,14 @@ class Firewall(Equipement):
                 elif rule.action == "bloquer":
                     self.journaliser(package, "BLOQUE")
                     return False
-    def journaliser(self, package, decision):
+    def journaliser(self, package: Paquet, decision: str):
         entree = EntreeJournal(package, decision)
         self.journal.append(entree)
     def get_journal(self):
         return self.journal
+    def __str__(self):
+        base = super().__str__()
+        return f"{base} | Regles: {len(self.regles)}"
         
         
 

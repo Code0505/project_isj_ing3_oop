@@ -1,4 +1,4 @@
-from equipements import Equipement,Routeur, Switch, Serveur, PointAccesWifi, Terminal
+""" from equipements import Equipement,Routeur, Switch, Serveur, PointAccesWifi, Terminal
 from paquets import Paquet
 from topologie import Topologie, Lien
 from securite import RegleFiltrage,Firewall
@@ -106,7 +106,7 @@ class MenuInteractif:
             equip = PointAccesWifi(nom, marque, adresse_ip, ssid)
         elif choix == "6":
             type_t = input("Type terminal : ")
-            equip = Terminal(nom, marque, adresse_ip, type_terminal)
+            equip = Terminal(nom, marque, adresse_ip, type_t)
         else:
             print("Type invalide.")
             return
@@ -296,7 +296,7 @@ class MenuInteractif:
 if __name__ == "__main__":
     menu = MenuInteractif()
     menu.lancer()
-    """te= Terminal("PC_Bureau","Lenovo","192.168.1.100","Bureau")
+    te= Terminal("PC_Bureau","Lenovo","192.168.1.100","Bureau")
     te.activer()
     p= Paquet("192.168.1.10","10.0.0.1","TCP","512","1","80")
 
