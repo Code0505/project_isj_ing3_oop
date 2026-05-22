@@ -12,7 +12,7 @@
 
 | TCHATCHUM TIENTCHEU MIGUEL GILDAS | Module 4 — Surveillance |
 
-| TAGUIWA KAMDEM Boris | Module 5 —  |
+| TAGUIWA KAMDEM Boris | Module 5 —  Interface |
 
 ## Lancement
 
