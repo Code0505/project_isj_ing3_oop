@@ -15,7 +15,7 @@ class Paquet:
             f"Priorité = {self.priorite}, "
             f"Port = {self.port_destination})"
         )
-        class Paquet:
+
     def __init__(self, source, destination, protocole, taille, priorite, port_destination):
         self.source = source
         self.destination = destination
@@ -74,5 +74,3 @@ class Statistiques:
             f"  Temps transit   : {self.temps_transit} ms\n"
             f")"
         )
-Et dans les autres fichiers qui ont besoin de Statistiques, l'import sera :
-pythonfrom paquets import Paquet, Statistiques
