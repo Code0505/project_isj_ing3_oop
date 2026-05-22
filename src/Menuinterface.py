@@ -1,5 +1,5 @@
 from equipements import Routeur, Switch, Serveur,PointAccesWifi, Terminal
-from Paquets import Paquet,SimulateurTrafic
+from paquets import Paquet,SimulateurTrafic
 from topologie import Topologie, Lien
 from securite import RegleFiltrage,Firewall
 # from simulateur import SimulateurTrafic
