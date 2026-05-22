@@ -12,7 +12,7 @@
 
 | NOM Prénom  4 | Module 4 —  |
 
-|NOM Prénom  5 | Module 5 —  |
+| TAGUIWA KAMDEM Boris | Module 5 —  |
 
 ## Lancement
 
@@ -27,7 +27,8 @@ python src/main.py
 - Stockage des informations réseau
 - Inspection des paquets par le firewall
 - Gestion des accès au firewall par authentification
--
--
--
--
+- Transmission saut par saut
+- Débit cumulé + temps de transit
+- Historique 10 derniers paquets
+- Collecte paquets envoyés/perdus
+- 
