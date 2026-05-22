@@ -1,17 +1,17 @@
-from equipements import Routeur, Switch, Serveur, Firewall, PointAccesWifi, Terminal
+""" from equipements import Equipement,Routeur, Switch, Serveur, PointAccesWifi, Terminal
 from paquets import Paquet
 from topologie import Topologie, Lien
-from securite import RegleFiltrage
-from simulateur import SimulateurTrafic
-from moniteur import Moniteur
+from securite import RegleFiltrage,Firewall
+# from simulateur import SimulateurTrafic
+from Moniteur import Moniteur
 
 
 class MenuInteractif:
 
     def __init__(self):
         self.topologie  = Topologie()
-        self.simulateur = SimulateurTrafic(self.topologie)
-        self.moniteur   = Moniteur(self.topologie)
+        # self.simulateur = SimulateurTrafic(self.topologie)
+        self.Moniteur   = Moniteur(self.topologie)
 
     # LANCEMENT
 
@@ -89,24 +89,24 @@ class MenuInteractif:
         choix = input("Type : ")
         nom    = input("Nom    : ")
         marque = input("Marque : ")
-        ip     = input("IP     : ")
+        adresse_ip = input("Adresse IP: ")
 
         if choix == "1":
-            equip = Routeur(nom, marque, ip)
+            equip = Routeur(nom, marque,adresse_ip)
         elif choix == "2":
-            equip = Switch(nom, marque, ip)
+            equip = Switch(nom, marque,adresse_ip)
         elif choix == "3":
-            equip = Serveur(nom, marque, ip)
+            equip = Serveur(nom, marque,adresse_ip)
         elif choix == "4":
             login = input("Login admin   : ")
             mdp   = input("Mot de passe  : ")
-            equip = Firewall(ip, nom, marque, login, mdp)
+            equip = Firewall(adresse_ip, nom, marque, login, mdp)
         elif choix == "5":
             ssid = input("SSID  : ")
-            equip = PointAccesWifi(nom, marque, ip, ssid)
+            equip = PointAccesWifi(nom, marque, adresse_ip, ssid)
         elif choix == "6":
             type_t = input("Type terminal : ")
-            equip = Terminal(nom, marque, ip, type_t)
+            equip = Terminal(nom, marque, adresse_ip, type_t)
         else:
             print("Type invalide.")
             return
@@ -115,9 +115,9 @@ class MenuInteractif:
         print(f"Équipement {nom} ajouté.")
 
     def _supprimer_equipement(self):
-        ip = input("IP de l'équipement à supprimer : ")
-        self.topologie.supprimer_equipement(ip)
-        print(f"Équipement {ip} supprimé.")
+        adresse_ip = input("Adresse IP de l'équipement à supprimer : ")
+        self.topologie.supprimer_equipement(adresse_ip)
+        print(f"Équipement {adresse_ip} supprimé.")
 
     def _ajouter_lien(self):
         ip1 = input("IP équipement 1 : ")
@@ -154,8 +154,9 @@ class MenuInteractif:
         protocole   = input("Protocole      : ").upper()
         taille      = int(input("Taille (octets): "))
         priorite    = int(input("Priorité (1-5) : "))
+        port_destination = int(input("Port de destination : "))
 
-        paquet = Paquet(source, destination, protocole, taille, priorite)
+        paquet = Paquet(source, destination, protocole, taille, priorite,port_destination)
 
         print(f"\nEnvoi du paquet : {paquet}")
         print("Parcours :")
@@ -295,3 +296,37 @@ class MenuInteractif:
 if __name__ == "__main__":
     menu = MenuInteractif()
     menu.lancer()
+    te= Terminal("PC_Bureau","Lenovo","192.168.1.100","Bureau")
+    te.activer()
+    p= Paquet("192.168.1.10","10.0.0.1","TCP","512","1","80")
+
+    te.envoyer_paquet(p)
+
+
+
+    ap= PointAccesWifi("AP_Labo","Tp-Link","192.168.0.1","GTR3-Lab",canal=9)
+    ap.activer()
+    print(ap.get_ssid())
+    print(ap)
+    ap.set_canal(11,2.4)
+    serv= Serveur("SRV_Web","Dell","10.0.2.1")
+    serv.activer()
+    serv.exposer_service("https")
+    serv.exposer_service("SSh")
+    print(serv)
+    print(serv.get_services())
+    sw= Switch("SW_Distrib","HP","10.0.0.2")
+    sw.activer()
+    sw.ajouter_vlan(10,"RH")
+    sw.ajouter_vlan(-1,"IT")
+    sw.assigner_port(1,10)
+    sw.assigner_port(1,35)
+    print(sw)
+    print(sw.get_vlans())
+
+    r=Routeur("R_Core","Cisco","10.0.0.1")
+    r.activer()
+    r.ajouter_route("192.168.1.0/24","192.168.1.254","eth0")
+    r.ajouter_route("10.0.0.0/8","10.0.0.254","eth1")
+    print(r)
+    print(r.get_table_routage())"""

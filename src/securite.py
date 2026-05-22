@@ -1,8 +1,11 @@
 from datetime import datetime
 from equipements import Equipement
-from paquets import Paquet
+from Paquets import Paquet
 
 class RegleFiltrage:
+    '''
+    Représente une règle utilisée par le firewall pour authoriser ou bloquer des paquets
+    '''
     def __init__(self, action, ip_source, protocole, port_destination, plage_reseau):
         self.action = action
         self.ip_source = ip_source
@@ -27,7 +30,7 @@ class RegleFiltrage:
             f"Protocole = {self.protocole})"
         ) """
     
-    def correspond(self, package):
+    def correspond(self, package:Paquet):
         if self.ip_source != "*" and self.ip_source != package.source:
             return False
         if self.protocole != "*" and self.protocole != package.protocole:
@@ -49,7 +52,10 @@ class RegleFiltrage:
         )
     
 class EntreeJournal:
-    def __init__(self, package, decision):
+    ''' 
+    Lorsqu'un paquet est envoyé, ses informations sont stockés en tant qu'une entrée du journal du firewall 
+    '''
+    def __init__(self, package: Paquet, decision: str):
         self.horodatage = datetime.now()
         self.package = package
         self.decision = decision
@@ -57,15 +63,33 @@ class EntreeJournal:
         return( f"{self.horodatage} :: {self.package} :: Decision... {self.decision}" )
     
 class Firewall(Equipement):
+    '''
+    Cette classe représente un firewall chargé d'inspecter les paquets et d'appliquer des règles de filtrage
+    '''
     def __init__(self, nom, marque, adresse_ip, login, mot_de_passe):
         super().__init__(nom, marque, adresse_ip )
         self.regles = []
         self.journal = []
         self.login = login
         self.mot_de_passe = mot_de_passe
+        self.paquets_envoyes = 0
+        self.paquets_envoyes = 0
+    
+    def activer(self):
+        self._statut = True
+        return f"{self._nom} actif"
+ 
+    def desactiver(self):
+        self._statut = False
+        return f"{self._nom} inactif"
+ 
+    def est_actif(self):
+        return self._statut
     def authentifier(self, login, password):
         if self.login == login and self.mot_de_passe == password:
+            print("Authentification reussie.")
             return True
+        print("Echec d'authentification.")
         return False
     def ajouter_regle(self, rule):
         self.regles.append(rule)
@@ -81,11 +105,14 @@ class Firewall(Equipement):
                 elif rule.action == "bloquer":
                     self.journaliser(package, "BLOQUE")
                     return False
-    def journaliser(self, package, decision):
+    def journaliser(self, package: Paquet, decision: str):
         entree = EntreeJournal(package, decision)
         self.journal.append(entree)
     def get_journal(self):
         return self.journal
+    def __str__(self):
+        base = super().__str__()
+        return f"{base} | Regles: {len(self.regles)}"
         
         
 
