@@ -14,7 +14,7 @@ class Topologie:
         self.equipements = {}
         self.liens = [] 
     def ajouter_equipement(self, equipement:Equipement):
-        self.equipements[equipement.ip] = equipement
+        self.equipements[equipement.adresse_ip] = equipement
     def supprimer_equipement(self, ip):
         if ip in self.equipements:
             del self.equipements[ip]

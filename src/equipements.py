@@ -225,6 +225,7 @@ class PointAccesWifi(Equipement):
     
 # testeur de classe
 
+""" 
 if __name__ =="__main__":
     te= Terminal("PC_Bureau","Lenovo","192.168.1.100","Bureau")
     te.activer()
@@ -260,4 +261,5 @@ if __name__ =="__main__":
     r.ajouter_route("10.0.0.0/8","10.0.0.254","eth1")
     print(r)
     print(r.get_table_routage())
+    """
             

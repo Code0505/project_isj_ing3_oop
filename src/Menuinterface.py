@@ -1,8 +1,8 @@
-from equipements import Routeur, Switch, Serveur, Firewall, PointAccesWifi, Terminal
+"""from equipements import Routeur, Switch, Serveur, Firewall, PointAccesWifi, Terminal
 from paquets import Paquet
 from topologie import Topologie, Lien
 from securite import RegleFiltrage
-from simulateur import SimulateurTrafic
+# from simulateur import SimulateurTrafic
 from Moniteur import Moniteur
 
 
@@ -10,7 +10,7 @@ class MenuInteractif:
 
     def __init__(self):
         self.topologie = Topologie()
-        self.simulateur = SimulateurTrafic(self.topologie)
+        #self.simulateur = SimulateurTrafic(self.topologie)
         self.moniteur = Moniteur(self.topologie)
 
     def lancer(self):
@@ -168,4 +168,4 @@ class MenuInteractif:
         print(stats)
 
         liens = self.moniteur.get_taux_utilisation_liens()
-        print(liens)
+        print(liens) """
