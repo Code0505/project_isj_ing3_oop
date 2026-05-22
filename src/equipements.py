@@ -1,4 +1,4 @@
-from Paquets import Paquet
+from paquets import Paquet
 from abc import ABC, abstractmethod
 
 

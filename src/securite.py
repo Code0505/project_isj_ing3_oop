@@ -1,6 +1,6 @@
 from datetime import datetime
 from equipements import Equipement
-from Paquets import Paquet
+from paquets import Paquet
 
 class RegleFiltrage:
     '''

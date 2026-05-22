@@ -2,9 +2,9 @@
 from statistique import Statistiques
 
 class Paquet:
-     '''
-    Paquet répresente un paquet circulant dans le réseau
-    '''
+    """
+     Paquet répresente un paquet circulant dans le réseau
+    """
     def __init__(self, source, destination, protocole, taille, priorite, port_destination):
         self.source = source
         self.destination = destination
